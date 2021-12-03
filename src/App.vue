@@ -1,30 +1,48 @@
 <template>
-  <div id="nav">
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
+  <div class="">
+    <div class="">
+      <div>
+        <router-link :class="`${route.name === 'todo' ? 'bg-green-600' : ''}`" to='todo'>Todo {{ todoList.length }}</router-link>
+        <router-link :class="`${route.name === 'done' ? 'bg-green-600' : ''}`" to='done'>Done {{ doneList.length }}</router-link>
+      </div>
+    </div>
+    <div class="">
+      <div v-if="todoList.length" class="">
+        <svg class="w-5" viewBox="0 0 24 24">
+          <path :d="mdiCheckCircleOutline" />
+        </svg>
+        <span class="ml-1">{{ todoList.length }}</span>
+      </div>
+
+      <div v-if="doneList.length" class="flex items-center">
+        <svg class="w-5" viewBox="0 0 24 24">
+          <path :d="mdiCheckCircle" />
+        </svg>
+        <span class="ml-1">{{ doneList.length }}</span>
+      </div>
+    </div>
   </div>
-  <router-view />
+  <div class="">
+    <router-view />
+  </div>
 </template>
 
-<style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+<script>
+import { useRoute } from "vue-router"
+import { mdiCheckCircle, mdiCheckCircleOutline } from '@mdi/js'
 
-#nav {
-  padding: 30px;
-}
+export default {
+  data() {
+    return {
+      todoList: this.$store.state.todoList,
+      doneList: this.$store.state.doneList,
+    }
+  },
+  setup() {
+    const route = useRoute()
 
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
+    return { route, mdiCheckCircle, mdiCheckCircleOutline }
+  },
 }
+</script>
 
-#nav a.router-link-exact-active {
-  color: #42b983;
-}
-</style>
