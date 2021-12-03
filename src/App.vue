@@ -1,28 +1,28 @@
 <template>
-  <div class="">
-    <div class="">
+  <div class="max-w-screen mt-8 border rounded-lg">
+    <div class="bg-green-500 px-6 py-4 text-white flex justify-between">
       <div>
-        <router-link :class="`${route.name === 'todo' ? 'bg-green-600' : ''}`" to='todo'>Todo {{ todoList.length }}</router-link>
-        <router-link :class="`${route.name === 'done' ? 'bg-green-600' : ''}`" to='done'>Done {{ doneList.length }}</router-link>
+        <router-link :class="`py-1 px-3 rounded-md text-white font-bold select-none ${route.name === 'todo' ? 'bg-green-600': ''}`" to='todo'>Todo</router-link>
+        <router-link :class="`py-1 px-3 rounded-md text-white font-bold select-none ${route.name === 'done' ? 'bg-green-600': ''}`" to='done'>Done</router-link>
       </div>
     </div>
-    <div class="">
-      <div v-if="todoList.length" class="">
-        <svg class="w-5" viewBox="0 0 24 24">
+    <div class="flex px-6">
+      <div v-if="todoList.length" class="flex items-center mr-10">
+        <svg class="w-5 inline-block fill-current" viewBox="0 0 24 24">
           <path :d="mdiCheckCircleOutline" />
         </svg>
         <span class="ml-1">{{ todoList.length }}</span>
       </div>
 
       <div v-if="doneList.length" class="flex items-center">
-        <svg class="w-5" viewBox="0 0 24 24">
+        <svg class="w-5 inline-block fill-current" viewBox="0 0 24 24">
           <path :d="mdiCheckCircle" />
         </svg>
         <span class="ml-1">{{ doneList.length }}</span>
       </div>
     </div>
   </div>
-  <div class="">
+  <div class="px-6 py-4 transition-all duration-300">
     <router-view />
   </div>
 </template>

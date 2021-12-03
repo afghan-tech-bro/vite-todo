@@ -1,5 +1,5 @@
 <template>
-  <div v-if="doneList.length">
+  <div v-if="doneList.length" class="divide-y">
     <TodoItem
       v-for="it in doneList"
       :key="it.id"
