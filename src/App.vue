@@ -1,48 +1,48 @@
 <template>
-  <div class="max-w-screen mt-8 border rounded-lg">
-    <div class="bg-green-500 px-6 py-4 text-white flex justify-between">
-      <div>
-        <router-link :class="`py-1 px-3 rounded-md text-white font-bold select-none ${route.name === 'todo' ? 'bg-green-600': ''}`" to='todo'>Todo</router-link>
-        <router-link :class="`py-1 px-3 rounded-md text-white font-bold select-none ${route.name === 'done' ? 'bg-green-600': ''}`" to='done'>Done</router-link>
-      </div>
-    </div>
-    <div class="flex px-6">
-      <div v-if="todoList.length" class="flex items-center mr-10">
-        <svg class="w-5 inline-block fill-current" viewBox="0 0 24 24">
-          <path :d="mdiCheckCircleOutline" />
-        </svg>
-        <span class="ml-1">{{ todoList.length }}</span>
-      </div>
+<nav class="bg-gray-800 mx-auto px-2 lg:px-8 relative flex items-center justify-between h-16">
+  <div>
+    <router-link to="home" class="text-white px-3 py-2 rounded-md text-sm font-medium">Home</router-link>
+    <router-link to="todo" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Lists</router-link>
+  </div>
+  <div class="absolute inset-y-0 right-0 flex items-center pr-2" v-if="!user">
+    <router-link to="signin" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Sign In</router-link>
+    <router-link to="register" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Register</router-link>
+  </div>
+  <div class="absolute inset-y-0 right-0 flex items-center pr-2" v-if="user">
+    <div to="register" class="text-gray-300 px-3 py-2 rounded-md text-sm font-medium">Name: {{ user.displayName }}</div>
+    <button @click="logout" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Logout</button>
+  </div>
+</nav>
 
-      <div v-if="doneList.length" class="flex items-center">
-        <svg class="w-5 inline-block fill-current" viewBox="0 0 24 24">
-          <path :d="mdiCheckCircle" />
-        </svg>
-        <span class="ml-1">{{ doneList.length }}</span>
-      </div>
-    </div>
-  </div>
-  <div class="px-6 py-4 transition-all duration-300">
-    <router-view />
-  </div>
+<router-view />
 </template>
 
 <script>
-import { useRoute } from "vue-router"
-import { mdiCheckCircle, mdiCheckCircleOutline } from '@mdi/js'
+import db from './firebase'
+import { getAuth, onAuthStateChanged } from 'firebase/auth'
+
+const auth = getAuth()
 
 export default {
+  created() {
+    onAuthStateChanged(auth, (user) => {
+      this.user = user;
+      if (user) {
+        this.$router.push('/todo')
+      } else {
+        this.$router.push('/signin')
+      }
+    })
+  },
   data() {
     return {
-      todoList: this.$store.state.todoList,
-      doneList: this.$store.state.doneList,
+      user: this.$store.state.user,
     }
   },
-  setup() {
-    const route = useRoute()
-
-    return { route, mdiCheckCircle, mdiCheckCircleOutline }
+  methods: {
+    logout() {
+      auth.signOut()
+    }
   },
 }
 </script>
-

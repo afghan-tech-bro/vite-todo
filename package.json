@@ -11,7 +11,8 @@
     "@mdi/js": "^6.5.95",
     "vue": "^3.2.6",
     "vue-router": "^4.0.11",
-    "vuex": "^4.0.2"
+    "vuex": "^4.0.2",
+    "firebase": "^9.5.0"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^1.6.0",

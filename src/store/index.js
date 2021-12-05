@@ -4,9 +4,16 @@ export default new createStore({
   state: {
     id: 0,
     todoList: [],
-    doneList: []
+    doneList: [],
+    user: {
+      email: '',
+      displayName: ''
+    }
   },
   mutations: {
+    setUser: (state, user) => {
+      state.user = user
+    },
     addTodo: (state, todo) => {
       state.id++
       state.todoList.push({id: state.id, name: todo})
@@ -23,8 +30,12 @@ export default new createStore({
       if (idx !== -1) {
         state.doneList.splice(idx, 1)
       }
-    }
+    },
   },
   actions: {},
-  modules: {}
+  getters: {
+    getEmail: (state) => {
+      return state.user.email
+    },
+  }
 });

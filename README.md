@@ -1,4 +1,11 @@
-# vite-tailwind
+# firebase
+
+inside /src/firebase.js, replace firebaseConfig with your own keys :smile:
+
+## Screenshots
+
+![signin](src/assets/screenshots/signin.png)
+![todo](src/assets/screenshots/todo.png)
 
 ## Build Setup
 
