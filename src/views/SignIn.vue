@@ -72,6 +72,7 @@ export default {
       .then(res => {
         const user = {
           displayName: res.user.displayName,
+          uid: res.user.uid,
           email: email
         }
         console.log('Successfully logged in!')

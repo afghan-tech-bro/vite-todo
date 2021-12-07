@@ -39,17 +39,30 @@
 <script>
 import NavList from "../components/NavList.vue"
 import TodoItem from "../components/TodoItem.vue"
+import db from '../firebase'
+import {
+  addDoc,
+  collection,
+} from 'firebase/firestore'
 
 export default {
   components: { TodoItem, NavList },
   data() {
     return {
-      todoList: this.$store.state.todoList
+      todoList: this.$store.state.todoList,
+      user: this.$store.state.user
     }
   },
   methods: {
     addTodo(todo) {
       this.$store.commit('addTodo', todo)
+      addDoc(collection(db, 'users2'), {
+        id: todo.id,
+        text: todo.name,
+        timestamp: Date.now(),
+        name: this.user.displayName,
+        userId: this.user.uid,
+      })
     },
     finish(id) {
       this.$store.commit('finish', id)

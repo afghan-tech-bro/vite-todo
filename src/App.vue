@@ -20,8 +20,15 @@
 <script>
 import db from './firebase'
 import { getAuth, onAuthStateChanged } from 'firebase/auth'
+import {
+  collection,
+  query,
+  orderBy,
+  onSnapshot,
+} from 'firebase/firestore'
 
 const auth = getAuth()
+let todoListener = null
 
 export default {
   created() {
@@ -29,19 +36,40 @@ export default {
       this.user = user;
       if (user) {
         this.$router.push('/todo')
+        this.subscribeTodo()
       } else {
         this.$router.push('/signin')
+        this.unsubscribeTodo()
       }
     })
   },
   data() {
     return {
       user: this.$store.state.user,
+      todoPrint: []
     }
   },
   methods: {
     logout() {
       auth.signOut()
+    },
+    // Listen to todo updates
+    subscribeTodo() {
+      const q = query(collection(db, 'users2'), orderBy('timestamp', 'desc'))
+      todoListener = onSnapshot(q, (snaps) => {
+        // Loop through documents in database
+        snaps.forEach((doc) => {
+          const entry = doc.data().name + ': ' + doc.data().text
+          todoPrint.append(entry)
+        });
+      });
+    },
+    // Unsubscribe from todo updates
+    unsubscribeTodo() {
+      if (todoListener != null) {
+        todoListener()
+        todoListener = null
+      }
     }
   },
 }

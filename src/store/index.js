@@ -7,7 +7,8 @@ export default new createStore({
     doneList: [],
     user: {
       email: '',
-      displayName: ''
+      displayName: '',
+      uid: ''
     }
   },
   mutations: {
