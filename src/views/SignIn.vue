@@ -60,7 +60,8 @@ export default {
   data() {
     return {
       email: this.$store.getters.getEmail,
-      password: ''
+      password: '',
+      uid: res.user.uid
     }
   },
   methods: {
