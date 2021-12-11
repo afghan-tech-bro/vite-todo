@@ -59,7 +59,7 @@ const auth = getAuth()
 export default {
   data() {
     return {
-      email: this.$store.getters.getEmail,
+      email: this.$store.state.email,
       password: ''
     }
   },
@@ -70,13 +70,8 @@ export default {
 
       signInWithEmailAndPassword(auth, email, password)
       .then(res => {
-        const user = {
-          displayName: res.user.displayName,
-          uid: res.user.uid,
-          email: email
-        }
         console.log('Successfully logged in!')
-        this.$store.commit('setUser', user)
+        this.$store.commit('setUser', res.user)
       })
       .catch(err => {
         console.log(err.message)

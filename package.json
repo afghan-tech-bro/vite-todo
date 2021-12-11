@@ -9,10 +9,12 @@
   "dependencies": {
     "@headlessui/vue": "^1.4.1",
     "@mdi/js": "^6.5.95",
+    "firebase": "^9.5.0",
+    "lodash": "^4.17.21",
+    "lodash.clonedeep": "^4.5.0",
     "vue": "^3.2.6",
     "vue-router": "^4.0.11",
-    "vuex": "^4.0.2",
-    "firebase": "^9.5.0"
+    "vuex": "^4.0.2"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^1.6.0",

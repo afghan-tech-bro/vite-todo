@@ -41,42 +41,18 @@
 </template>
 
 <script>
-import { getAuth, createUserWithEmailAndPassword, updateProfile } from 'firebase/auth'
-const auth = getAuth();
-
 export default {
   data() {
     return {
-      displayName: this.$store.state.user.displayName,
-      email: this.$store.state.user.email,
+      displayName: this.$store.state.user?.displayName,
+      email: this.$store.state.user?.email,
       password: '',
     }
   },
   methods: {
     register() {
-      const displayName = this.displayName
-      const email = this.email
-      const password = this.password
-
-      createUserWithEmailAndPassword(auth, email, password)
-      .then(res => {
-        updateProfile(res.user, {
-          displayName: displayName
-        })
-        .then(() => {
-          console.log('Successfully registered!')
-          const user = {
-            displayName: displayName,
-            email: email
-          }
-          this.$store.commit('setUser', user)
-          this.$router.push('todo')
-        })
-      })
-      .catch(err => {
-        console.log(err.message)
-        alert(err.msg)
-      });
+      this.$store.commit('register', this.password)
+      this.$router.push('todo')
     }
   }
 }
